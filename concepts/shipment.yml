@@ -1,0 +1,38 @@
+id: shipment
+label: Shipment
+description: >
+  A fulfilment record describing how an order was physically delivered.
+synonyms: [delivery, consignment]
+owners: [demo-team]
+
+properties:
+  - name: shipment_id
+    type: id
+  - name: carrier
+    type: string
+  - name: tracking_number
+    type: string
+  - name: shipped_at
+    type: timestamp
+  - name: delivered_at
+    type: timestamp
+
+relations:
+  - name: for
+    target: order
+    cardinality: '1'
+    description: Each shipment fulfils exactly one order in this demo.
+  - name: to
+    target: address
+    cardinality: '1'
+    description: Each shipment is addressed to one destination address.
+
+mapping:
+  source: snowflake
+  table: ANALYTICS.FACT_SHIPMENT
+  columns:
+    shipment_id: SHIPMENT_ID
+    carrier: CARRIER_NAME
+    tracking_number: TRACKING_NO
+    shipped_at: SHIPPED_TS
+    delivered_at: DELIVERED_TS

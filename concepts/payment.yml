@@ -1,0 +1,44 @@
+id: payment
+label: Payment
+description: >
+  A financial transaction attempt associated with settling an order.
+synonyms: [transaction, tender]
+owners: [demo-team]
+
+properties:
+  - name: payment_id
+    type: id
+  - name: payment_method
+    type: enum
+    values: [CARD, PAYPAL, STORE_CREDIT, BANK_TRANSFER]
+  - name: amount
+    type: number
+  - name: status
+    type: enum
+    values: [AUTHORISED, CAPTURED, FAILED, REFUNDED]
+  - name: paid_at
+    type: timestamp
+
+relations:
+  - name: for
+    target: order
+    cardinality: '1'
+    description: Every payment is tied to exactly one order.
+  - name: refunded-by
+    target: refund
+    cardinality: 0..n
+    description: A payment may be partially or fully reversed by refunds.
+
+mapping:
+  source: snowflake
+  table: ANALYTICS.FACT_PAYMENT
+  columns:
+    payment_id: PAYMENT_ID
+    payment_method: PAYMENT_METHOD_CD
+    amount: PAYMENT_AMT
+    status: PAYMENT_STATUS
+    paid_at: PAID_TS
+
+notes: >
+  Multiple payment rows are allowed so the ontology can express retries, split tender,
+  and post-order captures without inventing a more complex settlement model.

@@ -1,0 +1,35 @@
+id: risk-rating
+label: Risk Rating
+description: >
+  An assessment of the likelihood that a customer interaction is risky or fraudulent.
+synonyms: [risk score, fraud rating]
+owners: [demo-team]
+
+properties:
+  - name: risk_rating_id
+    type: id
+  - name: level
+    type: enum
+    values: [LOW, MEDIUM, HIGH]
+  - name: assessed_at
+    type: timestamp
+  - name: model_version
+    type: string
+  - name: rationale
+    type: string
+
+relations:
+  - name: assesses
+    target: customer
+    cardinality: '1'
+    description: Each risk rating assesses exactly one customer.
+
+mapping:
+  source: snowflake
+  table: ANALYTICS.FACT_RISK_RATING
+  columns:
+    risk_rating_id: RISK_RATING_ID
+    level: RISK_LEVEL
+    assessed_at: ASSESSED_TS
+    model_version: MODEL_VERSION
+    rationale: RATIONALE_TXT

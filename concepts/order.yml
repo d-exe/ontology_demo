@@ -1,0 +1,55 @@
+id: order
+label: Order
+description: >
+  A commercial commitment by a customer to buy one or more products.
+synonyms: [purchase, sale, basket]
+owners: [demo-team]
+
+properties:
+  - name: order_id
+    type: id
+  - name: order_date
+    type: date
+  - name: status
+    type: enum
+    values: [PENDING, CONFIRMED, SHIPPED, CANCELLED]
+  - name: total_amount
+    type: number
+  - name: currency
+    type: string
+
+relations:
+  - name: placed-by
+    target: customer
+    cardinality: '1'
+    description: Each order is placed by exactly one customer.
+  - name: contains
+    target: order-line
+    cardinality: 1..n
+    description: An order contains one or more line items.
+  - name: ships-via
+    target: shipment
+    cardinality: 0..1
+    description: An order may be fulfilled by a single shipment record.
+  - name: paid-by
+    target: payment
+    cardinality: 0..n
+    description: An order can have multiple payment attempts or splits.
+  - name: uses
+    target: promotion
+    cardinality: 0..n
+    description: Promotions can be applied at checkout.
+
+mapping:
+  source: snowflake
+  table: ANALYTICS.FACT_ORDER
+  columns:
+    order_id: ORDER_ID
+    order_date: ORDER_DT
+    status: ORDER_STATUS
+    total_amount: ORDER_TOTAL_AMT
+    currency: CURRENCY_CD
+
+notes: >
+  The demo keeps order state intentionally simple. Real commerce platforms often
+  distinguish order, fulfilment, and financial lifecycle states much more finely.

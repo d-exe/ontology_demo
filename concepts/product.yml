@@ -1,0 +1,42 @@
+id: product
+label: Product
+description: >
+  A sellable item offered through the store catalogue.
+synonyms: [item, sku, merchandise]
+owners: [demo-team]
+
+properties:
+  - name: product_id
+    type: id
+  - name: sku
+    type: string
+  - name: name
+    type: string
+  - name: active
+    type: boolean
+  - name: list_price
+    type: number
+
+relations:
+  - name: belongs-to
+    target: category
+    cardinality: 1..n
+    description: A product may sit in one or more merchandising categories.
+  - name: has
+    target: review
+    cardinality: 0..n
+    description: Customers may leave reviews for a product.
+
+mapping:
+  source: snowflake
+  table: ANALYTICS.DIM_PRODUCT
+  columns:
+    product_id: PRODUCT_ID
+    sku: SKU_CD
+    name: PRODUCT_NAME
+    active: IS_ACTIVE
+    list_price: LIST_PRICE_AMT
+
+notes: >
+  Product is the shopper-facing entity here, not the full internal assortment model.
+  Variants, bundles, and supplier pack definitions are collapsed for clarity.

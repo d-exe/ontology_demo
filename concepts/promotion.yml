@@ -1,0 +1,42 @@
+id: promotion
+label: Promotion
+description: >
+  A commercial incentive that discounts categories or products for a defined period.
+synonyms: [offer, discount, campaign]
+owners: [demo-team]
+
+properties:
+  - name: promotion_id
+    type: id
+  - name: code
+    type: string
+  - name: discount_type
+    type: enum
+    values: [PERCENTAGE, FIXED_AMOUNT, FREE_SHIPPING]
+  - name: discount_value
+    type: number
+  - name: starts_on
+    type: date
+  - name: ends_on
+    type: date
+
+relations:
+  - name: applies-to
+    target: category
+    cardinality: 0..n
+    description: Promotions can target groups of products through categories.
+  - name: applies-to
+    target: product
+    cardinality: 0..n
+    description: Promotions can also target individual products directly.
+
+mapping:
+  source: snowflake
+  table: ANALYTICS.DIM_PROMOTION
+  columns:
+    promotion_id: PROMOTION_ID
+    code: PROMO_CODE
+    discount_type: DISCOUNT_TYPE
+    discount_value: DISCOUNT_VALUE
+    starts_on: START_DATE
+    ends_on: END_DATE

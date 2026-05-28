@@ -1,0 +1,35 @@
+id: refund
+label: Refund
+description: >
+  A reversal of funds previously captured against a payment.
+synonyms: [reversal, credit]
+owners: [demo-team]
+
+properties:
+  - name: refund_id
+    type: id
+  - name: refund_reason
+    type: string
+  - name: amount
+    type: number
+  - name: status
+    type: enum
+    values: [REQUESTED, APPROVED, SETTLED]
+  - name: refunded_at
+    type: timestamp
+
+relations:
+  - name: reverses
+    target: payment
+    cardinality: '1'
+    description: Every refund reverses exactly one payment.
+
+mapping:
+  source: snowflake
+  table: ANALYTICS.FACT_REFUND
+  columns:
+    refund_id: REFUND_ID
+    refund_reason: REFUND_REASON_TXT
+    amount: REFUND_AMT
+    status: REFUND_STATUS
+    refunded_at: REFUNDED_TS

@@ -1,0 +1,35 @@
+id: category
+label: Category
+description: >
+  A merchandising grouping used to organise products for browsing and promotion.
+synonyms: [department, taxonomy, collection]
+owners: [demo-team]
+
+properties:
+  - name: category_id
+    type: id
+  - name: name
+    type: string
+  - name: slug
+    type: string
+  - name: active
+    type: boolean
+
+relations:
+  - name: parent
+    target: category
+    cardinality: 0..1
+    description: Categories can roll up into a single parent category.
+
+mapping:
+  source: snowflake
+  table: ANALYTICS.DIM_CATEGORY
+  columns:
+    category_id: CATEGORY_ID
+    name: CATEGORY_NAME
+    slug: CATEGORY_SLUG
+    active: IS_ACTIVE
+
+notes: >
+  The self-reference is where a lot of hidden business meaning tends to live:
+  navigation hierarchy, reporting rollups, and campaign targeting rarely align perfectly.

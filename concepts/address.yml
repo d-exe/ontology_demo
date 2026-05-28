@@ -1,0 +1,41 @@
+id: address
+label: Address
+description: >
+  A postal address used for delivery, billing, or customer contact.
+synonyms: [location, destination]
+owners: [demo-team]
+
+properties:
+  - name: address_id
+    type: id
+  - name: line_1
+    type: string
+  - name: city
+    type: string
+  - name: region
+    type: string
+  - name: postal_code
+    type: string
+  - name: country
+    type: string
+
+relations:
+  - name: belongs-to
+    target: customer
+    cardinality: 0..1
+    description: An address may be stored against a customer profile.
+
+mapping:
+  source: snowflake
+  table: ANALYTICS.DIM_ADDRESS
+  columns:
+    address_id: ADDRESS_ID
+    line_1: ADDRESS_LINE_1
+    city: CITY_NAME
+    region: REGION_NAME
+    postal_code: POSTAL_CODE
+    country: COUNTRY_CODE
+
+notes: >
+  Address is intentionally reused for both customer profile data and shipment destination.
+  Real systems often split those into mastered and transactional variants.

@@ -1,0 +1,38 @@
+id: order-line
+label: Order Line
+description: >
+  A single product entry within an order, including quantity and pricing.
+synonyms: [line item, order item]
+owners: [demo-team]
+
+properties:
+  - name: order_line_id
+    type: id
+  - name: quantity
+    type: number
+  - name: unit_price
+    type: number
+  - name: line_total
+    type: number
+  - name: product_sku
+    type: string
+
+relations:
+  - name: belongs-to
+    target: order
+    cardinality: '1'
+    description: Every order line belongs to exactly one order.
+  - name: references
+    target: product
+    cardinality: '1'
+    description: Every order line references the product that was sold.
+
+mapping:
+  source: snowflake
+  table: ANALYTICS.FACT_ORDER_LINE
+  columns:
+    order_line_id: ORDER_LINE_ID
+    quantity: QTY
+    unit_price: UNIT_PRICE_AMT
+    line_total: LINE_TOTAL_AMT
+    product_sku: PRODUCT_SKU

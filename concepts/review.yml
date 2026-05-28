@@ -1,0 +1,43 @@
+id: review
+label: Review
+description: >
+  Feedback left by a customer about a product after purchase.
+synonyms: [rating, feedback, testimonial]
+owners: [demo-team]
+
+properties:
+  - name: review_id
+    type: id
+  - name: rating
+    type: enum
+    values: ['1', '2', '3', '4', '5']
+  - name: title
+    type: string
+  - name: verified_purchase
+    type: boolean
+  - name: reviewed_at
+    type: timestamp
+
+relations:
+  - name: of
+    target: product
+    cardinality: '1'
+    description: Every review is written about exactly one product.
+  - name: by
+    target: customer
+    cardinality: '1'
+    description: Every review is authored by exactly one customer.
+
+mapping:
+  source: snowflake
+  table: ANALYTICS.FACT_REVIEW
+  columns:
+    review_id: REVIEW_ID
+    rating: STAR_RATING_CD
+    title: REVIEW_TITLE
+    verified_purchase: VERIFIED_PURCHASE_FLG
+    reviewed_at: REVIEWED_TS
+
+notes: >
+  Reviews are attached to the customer concept rather than an anonymous session so the
+  graph can demonstrate cross-domain reasoning from behaviour to catalogue quality.

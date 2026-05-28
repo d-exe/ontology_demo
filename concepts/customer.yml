@@ -1,0 +1,47 @@
+id: customer
+label: Customer
+description: >
+  A person or organisation that buys products from the store.
+synonyms: [client, buyer, account]
+owners: [demo-team]
+
+properties:
+  - name: customer_id
+    type: id
+  - name: name
+    type: string
+  - name: email
+    type: string
+  - name: risk_rating
+    type: enum
+    values: [LOW, MEDIUM, HIGH]
+  - name: created_at
+    type: timestamp
+
+relations:
+  - name: places
+    target: order
+    cardinality: 1..n
+    description: A customer places one or more orders over time.
+  - name: has
+    target: address
+    cardinality: 0..n
+    description: A customer can store multiple delivery or billing addresses.
+  - name: has
+    target: risk-rating
+    cardinality: '1'
+    description: Every customer carries exactly one current risk assessment.
+
+mapping:
+  source: snowflake
+  table: ANALYTICS.DIM_CUSTOMER
+  columns:
+    customer_id: CUST_ID
+    name: CUST_NAME
+    email: EMAIL_ADDR
+    risk_rating: RISK_LVL
+    created_at: CREATED_TS
+
+notes: >
+  In this demo, customer starts at completed signup. Marketing prospects and guest
+  checkout identities are treated as separate populations and deliberately excluded.
