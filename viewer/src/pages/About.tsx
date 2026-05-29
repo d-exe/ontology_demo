@@ -1,6 +1,6 @@
 const repoUrl = 'https://github.com/d-exe/ontology_demo'
 const dexterUrl = 'https://github.com/d-exe'
-const linkedInPostUrl = 'https://www.linkedin.com/search/results/content/?keywords=Ontology%20IS%20Code'
+const linkedInPostUrl = 'https://www.linkedin.com/posts/tonyseale_did-you-start-building-your-ontology-as-a-activity-7463499066451103745-MEfM?utm_source=share&utm_medium=member_ios&rcm=ACoAACBJ7ZwBbY4Ubozb4WQccjAeEFSKQZBzcyk'
 
 export default function About() {
   return (
