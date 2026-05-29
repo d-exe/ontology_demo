@@ -15,7 +15,7 @@ export default function About() {
         <p>
           Built by{' '}
           <a href={dexterUrl} target="_blank" rel="noreferrer" className="text-indigo-300 hover:text-indigo-200">
-            Dexter Maclean
+            Dexter Michaels
           </a>
           . It exists to show a concrete, lightweight pattern for grounding data agents without adding a backend,
           triplestore, or runtime API dependency.
